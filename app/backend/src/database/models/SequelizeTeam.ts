@@ -13,6 +13,7 @@ class SequelizeTeam extends Model<
   InferCreationAttributes<SequelizeTeam>
 > {
   declare id: CreationOptional<number>;
+
   declare teamName: string;
 }
 
@@ -32,6 +33,7 @@ SequelizeTeam.init(
   {
     sequelize: db,
     modelName: 'teams',
+    tableName: 'teams',
     timestamps: false,
     underscored: true,
   },
