@@ -7,6 +7,7 @@ export default class TeamController {
 
   public async getAllTeams(_req: Request, res: Response) {
     const serviceResponse = await this.teamService.getAllTeams();
+    console.log({ serviceResponse });
     res.status(200).json(serviceResponse.data);
   }
 

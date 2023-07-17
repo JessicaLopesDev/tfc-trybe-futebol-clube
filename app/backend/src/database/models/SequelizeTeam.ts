@@ -9,8 +9,8 @@ import db from '.';
 // import OtherModel from './OtherModel';
 
 class SequelizeTeam extends Model<
-  InferAttributes<SequelizeTeam>,
-  InferCreationAttributes<SequelizeTeam>
+InferAttributes<SequelizeTeam>,
+InferCreationAttributes<SequelizeTeam>
 > {
   declare id: CreationOptional<number>;
 
@@ -26,7 +26,7 @@ SequelizeTeam.init(
       autoIncrement: true,
     },
     teamName: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
   },
