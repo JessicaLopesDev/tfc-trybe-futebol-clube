@@ -6,7 +6,7 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import SequelizeTeam from '../database/models/SequelizeTeam';
 
-import { Response } from 'superagent';
+// import { Response } from 'superagent';
 import { team, teams } from './mocks/team.mocks';
 
 chai.use(chaiHttp);
@@ -14,23 +14,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Testes Team', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
-
-  let chaiHttpResponse: Response;
-
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
-
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
+  // let chaiHttpResponse: Response;
 
   beforeEach(function () {
     sinon.restore();
