@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import router from './routes';
 
 class App {
@@ -8,6 +9,8 @@ class App {
     this.app = express();
 
     this.config();
+
+    this.app.use(cors());
 
     this.routes();
 

@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcryptjs';
 import UserModel from '../models/UserModel';
 import { IUser } from '../Interfaces/User/IUser';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
@@ -9,8 +10,14 @@ export default class UserService {
   public async findOne(
     email: string,
     password: string,
-  ): Promise<ServiceResponse<unknown>> {
+  ): Promise<ServiceResponse<IUser>> {
     const user = await this.userModel.findOne(email);
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+      return {
+        status: 'UNAUTHORIZED',
+        data: { message: 'Invalid email or password' },
+      };
+    }
     console.log(password);
     return { status: 'SUCCESSFUL', data: user };
   }
