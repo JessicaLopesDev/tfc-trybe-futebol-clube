@@ -7,7 +7,7 @@ import { IUserModel } from '../Interfaces/User/IUserModel';
 export default class UserService {
   constructor(private userModel: IUserModel = new UserModel()) {}
 
-  public async findOne(
+  public async getUserByEmail(
     email: string,
     password: string,
   ): Promise<ServiceResponse<IUser>> {
@@ -18,8 +18,18 @@ export default class UserService {
         data: { message: 'Invalid email or password' },
       };
     }
-    console.log(password);
     return { status: 'SUCCESSFUL', data: user };
+  }
+
+  public async getUser(email: string): Promise<ServiceResponse<IUser>> {
+    const validUser = await this.userModel.findOne(email);
+    if (!validUser) {
+      return {
+        status: 'UNAUTHORIZED',
+        data: { message: 'Invalid email or password' },
+      };
+    }
+    return { status: 'SUCCESSFUL', data: validUser };
   }
 
   public async getAllUsers(): Promise<ServiceResponse<IUser[]>> {
