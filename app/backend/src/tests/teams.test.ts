@@ -26,7 +26,7 @@ describe('Testes Team', () => {
     const { status, body } = await chai.request(app).get('/teams/9999');
 
     expect(status).to.equal(404);
-    expect(body.message).to.equal('Team 9999 not found');
+    expect(body.message).to.equal('Team not found');
   });
 
   it('Teste se retorna a lista de times', async () => {

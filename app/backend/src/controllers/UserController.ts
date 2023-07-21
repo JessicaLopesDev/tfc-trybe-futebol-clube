@@ -25,15 +25,16 @@ export default class UserController {
     const { authorization } = req.headers as { authorization: string };
     const validEmail = JwtToken.verify(authorization.split(' ')[1]) as string;
 
-    const { status, data } = await this.userService.getUser(validEmail);
+    const serviceResponse = await this.userService.getUser(validEmail);
 
-    if (status !== 'SUCCESSFUL') {
+    if (serviceResponse.status !== 'SUCCESSFUL') {
       return res
-        .status(mapStatusHTTP(status))
-        .json(data);
+        .status(mapStatusHTTP(serviceResponse.status))
+        .json(serviceResponse.data);
     }
-
-    res.status(200).json({ role: data.role });
+    // console.log(data);
+    const roleUpdated = serviceResponse.data.role;
+    res.status(200).json({ role: roleUpdated });
   }
 
   public async getAllUsers(_req: Request, res: Response) {
