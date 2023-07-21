@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import MatchService from '../services/MatchService';
+import mapStatusHTTP from '../utils/mapStatusHTTP';
 
 export default class MatchController {
   constructor(private matchService = new MatchService()) {}
@@ -7,15 +8,24 @@ export default class MatchController {
   public async getAllMatches(req: Request, res: Response) {
     const { inProgress } = req.query;
 
-    if (!inProgress) {
-      const serviceResponse = await this.matchService.getAllMatches();
-      console.log(serviceResponse);
+    if (inProgress) {
+      const serviceResponse = await this.matchService.filterByProgress(
+        inProgress ? inProgress === 'true' : false,
+      );
       return res.status(200).json(serviceResponse.data);
     }
-    const isInProgress = inProgress ? inProgress === 'true' : false;
+    const serviceResponse2 = await this.matchService.getAllMatches();
+    res.status(200).json(serviceResponse2.data);
+  }
 
-    const serviceResponse = await this.matchService.filterByProgress(isInProgress);
-    console.log(serviceResponse);
-    res.status(200).json(serviceResponse.data);
+  public async finishMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const serviceResponse = await this.matchService.finishMatch(Number(id));
+    if (serviceResponse.status !== 'SUCCESSFUL') {
+      return res
+        .status(mapStatusHTTP(serviceResponse.status))
+        .json(serviceResponse.data);
+    }
+    res.status(200).json({ message: 'Finished' });
   }
 }

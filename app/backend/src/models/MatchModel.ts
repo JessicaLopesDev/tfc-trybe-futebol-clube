@@ -35,4 +35,10 @@ export default class MatchModel implements IMatchModel {
     });
     return filteredMatches;
   }
+
+  async finishMatch(id: IMatch['id']): Promise<IMatch | null> {
+    await this.model.update({ inProgress: false }, { where: { id } });
+    const match = await this.model.findByPk(id);
+    return match || null;
+  }
 }

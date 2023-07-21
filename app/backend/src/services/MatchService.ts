@@ -12,9 +12,22 @@ export default class MatchService {
     return { status: 'SUCCESSFUL', data: allMatchs };
   }
 
-  public async filterByProgress(inProgress: boolean): Promise<ServiceResponse<IMatch[]>> {
+  public async filterByProgress(
+    inProgress: boolean,
+  ): Promise<ServiceResponse<IMatch[]>> {
     const filteredMatches = await this.matchModel.filterByProgress(inProgress);
 
     return { status: 'SUCCESSFUL', data: filteredMatches };
+  }
+
+  public async finishMatch(id: number): Promise<ServiceResponse<IMatch>> {
+    const selectedMatch = await this.matchModel.finishMatch(id);
+    if (!selectedMatch) {
+      return {
+        status: 'NOT_FOUND',
+        data: { message: 'Match not found' },
+      };
+    }
+    return { status: 'SUCCESSFUL', data: selectedMatch };
   }
 }
