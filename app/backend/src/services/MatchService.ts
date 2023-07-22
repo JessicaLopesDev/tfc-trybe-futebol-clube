@@ -36,8 +36,11 @@ export default class MatchService {
     awayTeamGoals: number,
     id: number,
   ): Promise<ServiceResponse<IMatch>> {
-    const selectedMatch = await this
-      .matchModel.updateMatch(homeTeamGoals, awayTeamGoals, id);
+    const selectedMatch = await this.matchModel.updateMatch(
+      homeTeamGoals,
+      awayTeamGoals,
+      id,
+    );
     if (!selectedMatch) {
       return {
         status: 'NOT_FOUND',
@@ -45,5 +48,10 @@ export default class MatchService {
       };
     }
     return { status: 'SUCCESSFUL', data: selectedMatch };
+  }
+
+  public async createMatch(newMatch: IMatch): Promise<ServiceResponse<IMatch>> {
+    const match = await this.matchModel.createMatch(newMatch);
+    return { status: 'SUCCESSFUL', data: match };
   }
 }

@@ -22,8 +22,7 @@ router.patch(
   (req: Request, res: Response) => matchController.updateMatch(req, res),
 );
 
-// router.post('/', Validations.loginValidation, (req: Request, res: Response) =>
-//   matchController.getUserByEmail(req, res),
-// );
+router.post('/', Validations.tokenValidation, (req: Request, res: Response) =>
+  matchController.createMatch(req, res));
 
 export default router;

@@ -9,4 +9,5 @@ export interface IMatchModel {
     homeTeamGoals: IMatch['homeTeamGoals'],
     awayTeamGoals: IMatch['awayTeamGoals'],
   ): Promise<IMatch | null>;
+  createMatch(newMatch: Partial<IMatch>): Promise<IMatch>;
 }

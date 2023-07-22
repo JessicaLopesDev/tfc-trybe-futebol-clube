@@ -32,13 +32,22 @@ export default class MatchController {
   public async updateMatch(req: Request, res: Response) {
     const { homeTeamGoals, awayTeamGoals } = req.body;
     const { id } = req.params;
-    const serviceResponse = await this
-      .matchService.updateMatch(homeTeamGoals, awayTeamGoals, Number(id));
+    const serviceResponse = await this.matchService.updateMatch(
+      homeTeamGoals,
+      awayTeamGoals,
+      Number(id),
+    );
     if (serviceResponse.status !== 'SUCCESSFUL') {
       return res
         .status(mapStatusHTTP(serviceResponse.status))
         .json(serviceResponse.data);
     }
     res.status(200).json(serviceResponse.data);
+  }
+
+  public async createMatch(req: Request, res: Response) {
+    const serviceResponse = await this.matchService.createMatch(req.body);
+
+    res.status(201).json(serviceResponse.data);
   }
 }
