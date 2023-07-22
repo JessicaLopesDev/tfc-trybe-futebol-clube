@@ -27,5 +27,12 @@ describe('Testes user', () => {
     expect(body).to.deep.equal(users);
   });
 
+  it('Teste se retorna o token ao fazer o login', async function () {
+    sinon.stub(SequelizeUser, 'findOne').resolves(completUser as any);
+    const { status, body } = await chai.request(app).post('/login').send(validBody);
+
+    expect(status).to.equal(200);
+    expect(body).to.have.key('token');
+  });
 
 });
