@@ -11,18 +11,22 @@ router.get('/', (req: Request, res: Response) =>
 
 router.patch(
   '/:id/finish',
-  Validations.tokenValidation,
+  Validations.token,
   (req: Request, res: Response) =>
     matchController.finishMatch(req, res),
 );
 
 router.patch(
   '/:id',
-  Validations.tokenValidation,
+  Validations.token,
   (req: Request, res: Response) => matchController.updateMatch(req, res),
 );
 
-router.post('/', Validations.tokenValidation, (req: Request, res: Response) =>
-  matchController.createMatch(req, res));
+router.post(
+  '/',
+  Validations.token,
+  Validations.match,
+  (req: Request, res: Response) => matchController.createMatch(req, res),
+);
 
 export default router;

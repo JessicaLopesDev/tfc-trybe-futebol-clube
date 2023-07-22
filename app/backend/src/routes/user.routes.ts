@@ -6,9 +6,9 @@ const userController = new UserController();
 
 const router = Router();
 
-router.post('/', Validations.loginValidation, (req: Request, res: Response) =>
+router.post('/', Validations.login, (req: Request, res: Response) =>
   userController.getUserByEmail(req, res));
-router.get('/role', Validations.tokenValidation, (req: Request, res: Response) =>
+router.get('/role', Validations.token, (req: Request, res: Response) =>
   userController.getUser(req, res));
 router.get('/', (req: Request, res: Response) =>
   userController.getAllUsers(req, res));

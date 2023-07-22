@@ -2,11 +2,12 @@ import { NextFunction, Request, Response } from 'express';
 import { ILogin } from '../../Interfaces/User/IUser';
 import Email from '../../validations/Email';
 import JwtToken from '../../utils/JwtToken';
+import SequelizeTeam from '../models/SequelizeTeam';
 
 class Validations {
   private static minLength = 6;
 
-  static loginValidation(
+  static login(
     req: Request,
     res: Response,
     next: NextFunction,
@@ -23,7 +24,11 @@ class Validations {
     next();
   }
 
-  static tokenValidation(req: Request, res: Response, next: NextFunction): Response | void {
+  static token(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Response | void {
     const { authorization } = req.headers;
 
     if (!authorization) {
@@ -34,9 +39,31 @@ class Validations {
 
       next();
     } catch (error) {
-      return res.status(401)
-        .json({ message: 'Token must be a valid token' });
+      return res.status(401).json({ message: 'Token must be a valid token' });
     }
+  }
+
+  static async match(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> {
+    const { homeTeamId, awayTeamId } = req.body;
+    const home = await SequelizeTeam.findByPk(homeTeamId);
+    const away = await SequelizeTeam.findByPk(awayTeamId);
+
+    if (!home || !away) {
+      return res.status(404).json({
+        message: 'There is no team with such id!',
+      });
+    }
+
+    if (awayTeamId === homeTeamId) {
+      return res.status(422).json({
+        message: 'It is not possible to create a match with two equal teams',
+      });
+    }
+    next();
   }
 }
 

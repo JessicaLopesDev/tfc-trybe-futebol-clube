@@ -19,7 +19,7 @@ describe('Testes match', () => {
   beforeEach(function () {
     sinon.restore();
   });
-  it('Teste se retorna a lista de usuários', async () => {
+  it('Teste se retorna a lista de partidas', async () => {
     sinon.stub(SequelizeMatch, 'findAll').resolves(matches as any);
     const { status, body } = await chai.request(app).get('/matches');
 
