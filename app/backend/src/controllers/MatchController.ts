@@ -28,4 +28,17 @@ export default class MatchController {
     }
     res.status(200).json({ message: 'Finished' });
   }
+
+  public async updateMatch(req: Request, res: Response) {
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    const { id } = req.params;
+    const serviceResponse = await this
+      .matchService.updateMatch(homeTeamGoals, awayTeamGoals, Number(id));
+    if (serviceResponse.status !== 'SUCCESSFUL') {
+      return res
+        .status(mapStatusHTTP(serviceResponse.status))
+        .json(serviceResponse.data);
+    }
+    res.status(200).json(serviceResponse.data);
+  }
 }

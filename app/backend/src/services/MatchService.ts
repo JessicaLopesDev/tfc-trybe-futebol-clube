@@ -30,4 +30,20 @@ export default class MatchService {
     }
     return { status: 'SUCCESSFUL', data: selectedMatch };
   }
+
+  public async updateMatch(
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+    id: number,
+  ): Promise<ServiceResponse<IMatch>> {
+    const selectedMatch = await this
+      .matchModel.updateMatch(homeTeamGoals, awayTeamGoals, id);
+    if (!selectedMatch) {
+      return {
+        status: 'NOT_FOUND',
+        data: { message: 'Match not found' },
+      };
+    }
+    return { status: 'SUCCESSFUL', data: selectedMatch };
+  }
 }
