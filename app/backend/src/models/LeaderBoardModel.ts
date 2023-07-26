@@ -6,7 +6,7 @@ import SequelizeTeam from '../database/models/SequelizeTeam';
 export default class LeaderBoardModel implements ILeaderBoardModel {
   private model = SequelizeMatch;
 
-  async findLeaderBoard(): Promise<IMatch[]> {
+  async findAll(): Promise<IMatch[]> {
     const allMatches = await this.model.findAll({
       include: [
         {
