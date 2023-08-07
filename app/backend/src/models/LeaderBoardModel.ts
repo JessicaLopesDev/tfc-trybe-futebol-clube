@@ -4,7 +4,15 @@ import { ILeaderBoardModel } from '../Interfaces/LeaderBoard/ILeaderBoardModel';
 import { IMatch } from '../Interfaces/Match/IMatch';
 import SequelizeMatch from '../database/models/SequelizeMatch';
 import { ILeaderboard } from '../Interfaces/LeaderBoard/ILeaderBoard';
-import { calcTotalGames, calcTotalPoints, calcTotalVictories } from '../utils/leaderBoardHome';
+import {
+  calcGoalsFavor,
+  calcGoalsOwn,
+  calcTotalDraws,
+  calcTotalGames,
+  calcTotalLosses,
+  calcTotalPoints,
+  calcTotalVictories,
+} from '../utils/leaderBoardHome';
 
 export default class LeaderBoardModel implements ILeaderBoardModel {
   private matchModel = SequelizeMatch;
@@ -45,6 +53,10 @@ export default class LeaderBoardModel implements ILeaderBoardModel {
       totalPoints: calcTotalPoints(team.id, matches),
       totalGames: calcTotalGames(team.id, matches),
       totalVictories: calcTotalVictories(team.id, matches),
+      totalDraws: calcTotalDraws(team.id, matches),
+      totalLosses: calcTotalLosses(team.id, matches),
+      goalsFavor: calcGoalsFavor(team.id, matches),
+      goalsOwn: calcGoalsOwn(team.id, matches),
     }));
   }
 }
