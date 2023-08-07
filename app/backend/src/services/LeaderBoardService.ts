@@ -8,7 +8,7 @@ export default class LeaderBoardService {
     private leaderBoardModel: ILeaderBoardModel = new LeaderBoardModel(),
   ) {}
 
-  public async getPerformanceHomeTeams(): Promise<ServiceResponse<IMatch[]>> {
+  public async getLeaderBoardHome(): Promise<ServiceResponse<IMatch[]>> {
     const data = await this.leaderBoardModel.findAll();
     return { status: 'SUCCESSFUL', data };
   }
