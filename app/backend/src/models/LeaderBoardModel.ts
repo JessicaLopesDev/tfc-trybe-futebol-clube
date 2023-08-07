@@ -4,7 +4,7 @@ import { ILeaderBoardModel } from '../Interfaces/LeaderBoard/ILeaderBoardModel';
 import { IMatch } from '../Interfaces/Match/IMatch';
 import SequelizeMatch from '../database/models/SequelizeMatch';
 import { ILeaderboard } from '../Interfaces/LeaderBoard/ILeaderBoard';
-import totalPoints from '../utils/leaderBoardHome';
+import { calcTotalGames, calcTotalPoints, calcTotalVictories } from '../utils/leaderBoardHome';
 
 export default class LeaderBoardModel implements ILeaderBoardModel {
   private matchModel = SequelizeMatch;
@@ -37,11 +37,14 @@ export default class LeaderBoardModel implements ILeaderBoardModel {
 
   async getLeaderBoardHome(): Promise<ILeaderboard[]> {
     const teams = await this.findAllTeams();
+    console.log(teams);
     const matches = await this.findAllMatches();
 
     return teams.map((team) => ({
       name: team.teamName,
-      totalPoints: totalPoints(team.id, matches),
+      totalPoints: calcTotalPoints(team.id, matches),
+      totalGames: calcTotalGames(team.id, matches),
+      totalVictories: calcTotalVictories(team.id, matches),
     }));
   }
 }

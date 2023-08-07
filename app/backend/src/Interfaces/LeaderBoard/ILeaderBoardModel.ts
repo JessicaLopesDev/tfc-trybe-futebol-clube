@@ -1,5 +1,5 @@
-import { IMatch } from '../Match/IMatch';
+import { ILeaderboard } from './ILeaderBoard';
 
 export interface ILeaderBoardModel {
-  findAllMatches(): Promise<IMatch[]>;
+  getLeaderBoardHome(): Promise<ILeaderboard[]>;
 }

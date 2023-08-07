@@ -1,19 +1,36 @@
 import { IMatch } from '../Interfaces/Match/IMatch';
 
-const totalPoints = (id: number, matches: IMatch[]) => {
+const calcTotalPoints = (id: number, matches: IMatch[]) => {
   let total = 0;
 
-  const matchesFiltered = matches
-    .filter((match) => match.homeTeamId === id);
+  matches
+    .filter((match) => match.homeTeamId === id)
+    .forEach((match) => {
+      if (match.homeTeamGoals > match.awayTeamGoals) total += 3;
 
-  matchesFiltered.map((match) => {
-    if (match.homeTeamGoals > match.awayTeamGoals) total += 3;
+      if (match.homeTeamGoals === match.awayTeamGoals) total += 1;
+    });
+  return total;
+};
 
-    if (match.homeTeamGoals === match.awayTeamGoals) total += 1;
+const calcTotalGames = (id: number, matches: IMatch[]) => {
+  let total = 0;
 
-    return total;
+  matches.forEach((match) => {
+    if (match.homeTeamId > id) total += 1;
   });
   return total;
 };
 
-export default totalPoints;
+const calcTotalVictories = (id: number, matches: IMatch[]) => {
+  let total = 0;
+
+  matches
+    .filter((match) => match.homeTeamId === id)
+    .forEach((match) => {
+      if (match.homeTeamGoals > match.awayTeamGoals) total += 1;
+    });
+  return total;
+};
+
+export { calcTotalPoints, calcTotalGames, calcTotalVictories };
