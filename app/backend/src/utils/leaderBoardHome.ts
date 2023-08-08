@@ -17,7 +17,7 @@ const calcTotalGames = (id: number, matches: IMatch[]) => {
   let total = 0;
 
   matches.forEach((match) => {
-    if (match.homeTeamId > id) total += 1;
+    if (match.homeTeamId === id) total += 1;
   });
   return total;
 };

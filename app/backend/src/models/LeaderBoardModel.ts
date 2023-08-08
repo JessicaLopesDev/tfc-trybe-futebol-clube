@@ -57,6 +57,11 @@ export default class LeaderBoardModel implements ILeaderBoardModel {
       totalLosses: calcTotalLosses(team.id, matches),
       goalsFavor: calcGoalsFavor(team.id, matches),
       goalsOwn: calcGoalsOwn(team.id, matches),
+      goalsBalance:
+        calcGoalsFavor(team.id, matches) - calcGoalsOwn(team.id, matches),
+      efficiency:
+        ((calcTotalPoints(team.id, matches) / (calcTotalGames(team.id, matches) * 3)) * 100)
+          .toFixed(2),
     }));
   }
 }

@@ -9,8 +9,12 @@ export default class LeaderBoardService {
   ) {}
 
   public async getLeaderBoardHome(): Promise<ServiceResponse<ILeaderboard[]>> {
-    const data = await this.leaderBoardModel.getLeaderBoardHome();
-    console.log(data);
+    const response = await this.leaderBoardModel.getLeaderBoardHome();
+    const data = response
+      .sort((a, b) => b.goalsFavor - a.goalsFavor)
+      .sort((a, b) => b.goalsBalance - a.goalsBalance)
+      .sort((a, b) => b.totalVictories - a.totalVictories)
+      .sort((a, b) => b.totalPoints - a.totalPoints);
     return { status: 'SUCCESSFUL', data };
   }
 }
